@@ -44,6 +44,7 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialogF
     String query;
     private String beginDate;
     private String sort;
+    private List<String> newsDeskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,7 +192,7 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialogF
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
         SettingsDialogFragment settingsDialogFragment = SettingsDialogFragment.newInstance();
-       // settingsDialogFragment.setNewsDesk(newsDeskList);
+       settingsDialogFragment.setNewsDesk(newsDeskList);
         settingsDialogFragment.setSort(sort);
         settingsDialogFragment.show(fm, "fragment_edit_settings");
     }
@@ -199,8 +200,23 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialogF
     @Override
     public void onDone(String beginDate, List<String> newsDeskList, String sort) {
         this.beginDate = beginDate;
-       // this.newsDeskList = newsDeskList;
+       this.newsDeskList = newsDeskList;
         this.sort = sort;
+        onArticleSearch(query,0);
+    }
+    private String buildNewsDeskQuery() {
+        String newsDesk = "";
+
+        if (newsDeskList != null) {
+            StringBuilder sb = new StringBuilder();
+            for (String s : newsDeskList) {
+                sb.append("\"").append(s).append("\"").append(" ");
+            }
+            newsDesk = sb.toString().trim();
+        }
+        if (!newsDesk.isEmpty())
+            newsDesk = "news_desk" + ":(" + newsDesk + ")";
+        return newsDesk;
     }
 
 }
