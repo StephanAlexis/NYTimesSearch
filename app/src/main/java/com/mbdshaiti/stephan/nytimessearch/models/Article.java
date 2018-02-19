@@ -3,13 +3,14 @@ package com.mbdshaiti.stephan.nytimessearch.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 
 /**
  * Created by Stephan on 2/18/2018.
  */
-
+@Parcel
 public class Article {
     String webUrl;
     String headline;
@@ -25,6 +26,10 @@ public class Article {
 
     public String getThumbnail() {
         return thumbnail;
+    }
+    public Article()
+    {
+
     }
     public Article(JSONObject jsonObject) {
         try {
