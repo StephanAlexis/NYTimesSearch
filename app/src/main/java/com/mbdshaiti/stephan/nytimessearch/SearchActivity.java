@@ -1,12 +1,15 @@
 package com.mbdshaiti.stephan.nytimessearch;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -14,6 +17,7 @@ import android.widget.GridView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.mbdshaiti.stephan.nytimessearch.activities.ArticleActivity;
 import com.mbdshaiti.stephan.nytimessearch.adapters.ArticleArrayAdapter;
 import com.mbdshaiti.stephan.nytimessearch.models.Article;
 
@@ -46,6 +50,16 @@ public class SearchActivity extends AppCompatActivity {
         articles=new ArrayList<>();
         adapter=new ArticleArrayAdapter(this,articles);
         gvResults.setAdapter(adapter);
+
+        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(getApplicationContext(), ArticleActivity.class);
+                Article article=articles.get(i);
+                intent.putExtra("article", (Parcelable) article);
+                startActivity(intent);
+            }
+        });
 
     }
 
